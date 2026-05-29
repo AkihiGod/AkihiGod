@@ -1,0 +1,36 @@
+{
+  "permissions": {
+    "allow": [
+      "WebSearch",
+      "Bash(pip install *)",
+      "Bash(where python *)",
+      "Bash(where python3 *)",
+      "Bash(where py *)",
+      "Bash(D:/python.exe -m pip install akshare flask pandas numpy scipy requests -q)",
+      "Bash(D:/python.exe -c \"from app import app; print\\('Flask app loaded successfully'\\)\")",
+      "Bash(D:/python.exe app.py)",
+      "Bash(curl -s http://localhost:5000/api/funds?type=all\\\\&page=1\\\\&per_page=5)",
+      "Bash(curl -s \"http://localhost:5000/api/market/index\")",
+      "Bash(curl -s \"http://127.0.0.1:5000/\")",
+      "Bash(netstat -ano)",
+      "Bash(taskkill /PID 20732 /F)",
+      "Bash(taskkill /PID 8640 /F)",
+      "Bash(curl -s \"http://127.0.0.1:5002/api/market/index\")",
+      "Bash(pkill -f \"python.exe app.py\")",
+      "Bash(curl -s \"http://127.0.0.1:5002/\")",
+      "Bash(curl -s \"http://127.0.0.1:5002/api/funds/search?q=005827\")",
+      "Bash(D:/python.exe -c \"import sys,json; d=json.load\\(sys.stdin\\); print\\(f'Success: {d[\\\\\"success\\\\\"]}, Count: {d[\\\\\"count\\\\\"]}'\\)\")",
+      "Bash(start *)",
+      "Bash(python -m pip install -r requirements.txt)",
+      "Bash(python app.py)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://127.0.0.1:5000/)",
+      "Bash(curl *)",
+      "Bash(python *)",
+      "Bash(pkill -f \"python app.py\")",
+      "Bash(echo \"Server restarted, HTTP $\\(curl -s -o /dev/null -w '%{http_code}' http://127.0.0.1:5002/\\)\")",
+      "Bash(echo \"Server started, HTTP $\\(curl -s -o /dev/null -w '%{http_code}' http://127.0.0.1:5002/\\)\")",
+      "Bash(python -c ' *)",
+      "Bash(pkill -f \"port=5003\")"
+    ]
+  }
+}

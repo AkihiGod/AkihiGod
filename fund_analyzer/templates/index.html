@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>FundRadar — 基金雷达</title>
+<link rel="stylesheet" href="/static/css/style.css">
+<script src="https://cdn.jsdelivr.net/npm/echarts@5.5.0/dist/echarts.min.js"></script>
+</head>
+<body>
+
+<!-- Status Bar -->
+<div class="status-bar">
+  <span class="title">FundRadar 基金雷达</span>
+  <span class="time" id="updateTime">加载中...</span>
+</div>
+
+<!-- Market Ticker -->
+<div class="market-ticker" id="marketTicker">
+  <div class="ticker-item"><span class="name">加载中...</span></div>
+</div>
+
+<!-- Tab Bar -->
+<div class="tab-bar">
+  <div class="tab active" data-tab="tab-funds">基金板块</div>
+  <div class="tab" data-tab="tab-analysis">持仓分析</div>
+  <div class="tab" data-tab="tab-news">新闻情报</div>
+</div>
+
+<!-- ==== TAB 1: 基金板块 ==== -->
+<div class="main-content tab-panel active" id="tab-funds">
+
+  <!-- 大盘指数 -->
+  <div class="card">
+    <div class="card-header">
+      <div><div class="card-title">市场指数</div></div>
+      <button class="refresh-btn" onclick="refreshAll()" id="refreshBtn">刷新</button>
+    </div>
+    <div class="market-ticker" id="marketIndex" style="border:none; padding:0; flex-wrap:wrap;">
+      <div class="ticker-item">加载中...</div>
+    </div>
+  </div>
+
+  <!-- 基金搜索 -->
+  <div class="card">
+    <div class="card-title" style="margin-bottom:12px;">基金搜索</div>
+    <div class="search-box">
+      <input type="text" id="fundSearch" placeholder="输入基金代码或名称搜索（如：005827 易方达蓝筹）" autocomplete="off">
+      <button onclick="searchFunds()">搜索</button>
+    </div>
+    <div id="searchResults" style="max-height:300px; overflow-y:auto;"></div>
+  </div>
+
+  <!-- 行业板块指数 -->
+  <div class="card">
+    <div class="card-header" style="flex-wrap:wrap;gap:10px;">
+      <div style="flex:1;min-width:200px;">
+        <div class="card-title">行业板块指数</div>
+        <div class="card-subtitle" id="sectorSubtitle">77个基金板块（传统+科技），点击可搜索对应基金</div>
+      </div>
+      <div class="search-box" style="max-width:240px;margin:0;">
+        <input type="text" id="sectorSearch" placeholder="搜索板块名称..." autocomplete="off" oninput="filterSectors()">
+      </div>
+      <span style="font-size:12px;color:var(--ios-text-secondary);" id="sectorUpdateTime"></span>
+    </div>
+    <div class="holdings-grid" id="sectorGrid">
+      <div class="loading"><div class="spinner"></div><div>加载行业板块...</div></div>
+    </div>
+    <div style="text-align:center;margin-top:12px;" id="sectorCollapseWrap">
+      <button class="collapse-btn" id="sectorCollapseBtn" onclick="toggleSectorCollapse()" style="display:none;">展开全部</button>
+    </div>
+  </div>
+
+  <!-- 自选基金 -->
+  <div class="card" id="watchlistCard">
+    <div class="card-header watchlist-header">
+      <div>
+        <div class="card-title">自选基金</div>
+        <div class="card-subtitle">点击星标添加自选，可查看各基金所处阶段</div>
+      </div>
+      <div class="watchlist-actions">
+        <span style="font-size:12px;color:var(--ios-text-secondary);" id="watchlistCount">0只</span>
+        <button class="refresh-btn" onclick="analyzeWatchlist()" id="analyzeWatchlistBtn" style="font-size:12px;padding:6px 12px;">分析阶段</button>
+      </div>
+    </div>
+    <div id="watchlistItems">
+      <div class="empty-state">
+        <div class="icon">☆</div>
+        <div>暂无自选基金，点击基金右侧星标添加</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ==== TAB 2: 持仓分析 ==== -->
+<div class="main-content tab-panel" id="tab-analysis">
+
+  <!-- 顶部导航栏：始终显示搜索框 + 返回按钮（加载基金后出现） -->
+  <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px;background:var(--ios-card-bg);border-radius:12px;padding:12px 16px;box-shadow:0 1px 3px rgba(0,0,0,0.06);">
+    <div class="search-box" style="flex:1;max-width:500px;margin-bottom:0;">
+      <button id="backBtn" onclick="closeFundDetail()" style="display:none;padding:12px 20px;background:var(--ios-blue);color:#fff;border:none;border-radius:10px;font-size:15px;font-weight:600;font-family:var(--font-system);cursor:pointer;white-space:nowrap;flex-shrink:0;">返回</button>
+      <input type="text" id="fundCodeInput" placeholder="输入基金代码（如：161725）" autocomplete="off" style="width:100%;">
+      <button onclick="loadFundDetail()">查看</button>
+    </div>
+  </div>
+
+  <div id="analysisPlaceholder" class="empty-state">
+    <div class="icon">🔍</div>
+    <div>请在"基金板块"中选择一只基金，或输入基金代码查看详情</div>
+  </div>
+
+  <div id="analysisContent" style="display:none;">
+    <!-- 基金基本信息 + 阶段判断 -->
+    <div class="card" id="fundPhaseCard"></div>
+
+    <!-- 净值走势图 -->
+    <div class="card">
+      <div class="card-header" style="flex-wrap:wrap;gap:8px;">
+        <div style="display:flex;align-items:center;gap:8px;">
+          <div class="card-title" id="navChartTitle" style="margin:0;">净值走势（近1年）</div>
+</div>
+        <div class="filter-pills" id="navRangeSelector" style="margin:0;padding:0;">
+          <span class="filter-pill" data-days="30">近1月</span>
+          <span class="filter-pill" data-days="90">近3月</span>
+          <span class="filter-pill" data-days="180">近6月</span>
+          <span class="filter-pill active" data-days="365">近1年</span>
+          <span class="filter-pill" data-days="1095">近3年</span>
+        </div>
+      </div>
+      <div class="chart-container" id="navChart"></div>
+    </div>
+
+    <!-- 重仓股分析 -->
+    <div class="card">
+      <div class="card-header">
+        <div class="card-title">重仓股深度分析</div>
+        <span style="font-size:12px;color:var(--ios-text-secondary);" id="holdingsUpdate"></span>
+      </div>
+      <div class="holdings-grid" id="holdingsGrid"></div>
+    </div>
+
+    <!-- AI 持仓诊断 -->
+    <div class="card" id="holdingsAICard" style="display:none;">
+      <div class="card-header">
+        <div>
+          <div class="card-title">AI 持仓诊断 <span style="font-size:12px;color:var(--ios-text-secondary);">DeepSeek V4 Pro</span></div>
+          <div class="card-subtitle">基于重仓股技术面数据，AI深度推理后给出基金投资建议</div>
+        </div>
+        <button class="refresh-btn" onclick="loadHoldingsAIAnalysis(currentFundCode, true)" id="holdingsAIRefreshBtn">刷新分析</button>
+      </div>
+      <div id="holdingsAIContent">
+        <div class="loading"><div class="spinner"></div><div>AI 正在分析重仓股数据...</div></div>
+      </div>
+    </div>
+
+    <!-- K线图弹窗区域 -->
+    <div class="card" id="klineCard" style="display:none;">
+      <div class="card-header">
+        <div class="card-title" id="klineTitle">K线图</div>
+        <button style="background:none;border:none;color:var(--ios-blue);font-size:15px;cursor:pointer;" onclick="closeKline()">关闭</button>
+      </div>
+      <div class="chart-container" id="klineChart" style="height:500px;"></div>
+      <div id="klineAnalysis" style="padding:0 18px 18px;"></div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ==== TAB 3: 新闻情报 ==== -->
+<div class="main-content tab-panel" id="tab-news">
+
+  <!-- AI 智能分析 -->
+  <div class="card" id="aiAnalysisCard">
+    <div class="card-header">
+      <div>
+        <div class="card-title">AI 智能分析 <span style="font-size:12px;color:var(--ios-text-secondary);">DeepSeek V4 Pro</span></div>
+        <div class="card-subtitle">综合当日新闻、板块表现、市场指数，AI深度推理后给出投资策略建议</div>
+      </div>
+      <button class="refresh-btn" onclick="loadAIAnalysis(true)" id="aiRefreshBtn">刷新分析</button>
+    </div>
+    <div id="aiAnalysisContent">
+      <div class="loading"><div class="spinner"></div><div>AI 正在深度分析今日市场数据...</div></div>
+    </div>
+  </div>
+
+  <!-- 新闻列表 -->
+  <div class="card">
+    <div class="card-header">
+      <div class="card-title">全部资讯</div>
+      <div style="display:flex;align-items:center;gap:10px;">
+        <span style="font-size:12px;color:var(--ios-text-secondary);" id="newsUpdateTime"></span>
+        <button class="refresh-btn" onclick="loadNews()" id="newsRefreshBtn">刷新</button>
+      </div>
+    </div>
+    <div class="news-filters" id="newsRegionFilters" style="margin-bottom:8px;"></div>
+    <div class="news-filters" id="newsFilters"></div>
+    <div id="newsList">
+      <div class="loading"><div class="spinner"></div><div>获取新闻中...</div></div>
+    </div>
+  </div>
+
+</div>
+
+<script src="/static/js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,733 @@
+/* ========================================
+   FundRadar — iOS Design System
+   白底iOS风格，干净极简专业
+   ======================================== */
+
+:root {
+  --ios-blue: #007AFF;
+  --ios-red: #FF3B30;
+  --ios-green: #34C759;
+  --ios-orange: #FF9500;
+  --ios-yellow: #FFCC00;
+  --ios-purple: #AF52DE;
+  --ios-teal: #5AC8FA;
+  --ios-gray: #8E8E93;
+  --ios-gray2: #AEAEB2;
+  --ios-gray3: #C7C7CC;
+  --ios-gray4: #D1D1D6;
+  --ios-gray5: #E5E5EA;
+  --ios-gray6: #F2F2F7;
+  --ios-bg: #F5F5F7;
+  --ios-card: #FFFFFF;
+  --ios-text: #1C1C1E;
+  --ios-text-secondary: #6E6E73;
+  --ios-separator: #E5E5EA;
+  --ios-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  --ios-shadow-lg: 0 8px 30px rgba(0,0,0,0.12);
+  --ios-radius: 16px;
+  --ios-radius-sm: 10px;
+  --ios-radius-xs: 8px;
+  --font-system: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Helvetica Neue", "PingFang SC", "Microsoft YaHei", sans-serif;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: var(--font-system);
+  background: var(--ios-bg);
+  color: var(--ios-text);
+  -webkit-font-smoothing: antialiased;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* ── Top Status Bar ── */
+.status-bar {
+  background: rgba(255,255,255,0.85);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  padding: 10px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--ios-text);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  border-bottom: 0.5px solid var(--ios-separator);
+}
+.status-bar .title {
+  font-size: 17px;
+  font-weight: 600;
+  letter-spacing: -0.2px;
+}
+.status-bar .time {
+  font-size: 12px;
+  color: var(--ios-text-secondary);
+}
+
+/* ── Market Ticker ── */
+.market-ticker {
+  padding: 12px 20px;
+  display: flex;
+  gap: 20px;
+  overflow-x: auto;
+  background: var(--ios-card);
+  border-bottom: 0.5px solid var(--ios-separator);
+  scrollbar-width: none;
+}
+.market-ticker::-webkit-scrollbar { display: none; }
+.market-ticker .ticker-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  white-space: nowrap;
+  font-size: 13px;
+  font-weight: 500;
+}
+.ticker-item .name { color: var(--ios-text-secondary); font-size: 12px; }
+.ticker-item .price { color: var(--ios-text); }
+.ticker-item .change.up { color: var(--ios-red); }
+.ticker-item .change.down { color: var(--ios-green); }
+
+/* ── Tab Bar ── */
+.tab-bar {
+  display: flex;
+  background: var(--ios-card);
+  border-bottom: 0.5px solid var(--ios-separator);
+  position: sticky;
+  top: 46px;
+  z-index: 99;
+}
+.tab-bar .tab {
+  flex: 1;
+  text-align: center;
+  padding: 14px 8px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--ios-text-secondary);
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  transition: all 0.2s;
+  user-select: none;
+}
+.tab-bar .tab.active {
+  color: var(--ios-blue);
+  border-bottom-color: var(--ios-blue);
+}
+.tab-bar .tab:hover { color: var(--ios-text); }
+
+/* ── Main Content ── */
+.main-content { padding: 16px; max-width: 900px; margin: 0 auto; }
+.tab-panel { display: none; }
+.tab-panel.active { display: block; }
+
+/* ── Cards ── */
+.card {
+  background: var(--ios-card);
+  border-radius: var(--ios-radius);
+  padding: 18px;
+  margin-bottom: 14px;
+  box-shadow: var(--ios-shadow);
+  transition: box-shadow 0.2s;
+}
+.card:hover { box-shadow: var(--ios-shadow-lg); }
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 14px;
+}
+.card-title {
+  font-size: 17px;
+  font-weight: 600;
+  letter-spacing: -0.2px;
+}
+.card-subtitle {
+  font-size: 12px;
+  color: var(--ios-text-secondary);
+  margin-top: 2px;
+}
+
+/* ── Search Box ── */
+.search-box {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+.search-box input {
+  flex: 1;
+  padding: 12px 16px;
+  border: none;
+  border-radius: var(--ios-radius-sm);
+  background: var(--ios-gray6);
+  font-size: 16px;
+  font-family: var(--font-system);
+  outline: none;
+  transition: background 0.2s;
+}
+.search-box input:focus { background: #E8E8ED; }
+.search-box button {
+  padding: 12px 20px;
+  background: var(--ios-blue);
+  color: white;
+  border: none;
+  border-radius: var(--ios-radius-sm);
+  font-size: 15px;
+  font-weight: 600;
+  font-family: var(--font-system);
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+.search-box button:hover { opacity: 0.85; }
+.search-box button:active { opacity: 0.7; }
+
+/* ── Fund List ── */
+.fund-list { max-height: 500px; overflow-y: auto; }
+.fund-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 14px;
+  border-radius: var(--ios-radius-xs);
+  cursor: pointer;
+  transition: background 0.15s;
+  border-bottom: 0.5px solid var(--ios-separator);
+}
+.fund-item:last-child { border-bottom: none; }
+.fund-item:hover { background: var(--ios-gray6); }
+.fund-item .fund-info { flex: 1; }
+.fund-item .fund-name { font-size: 15px; font-weight: 500; }
+.fund-item .fund-code { font-size: 12px; color: var(--ios-text-secondary); margin-top: 2px; }
+.fund-item .fund-return { text-align: right; }
+.fund-item .fund-return .val { font-size: 15px; font-weight: 600; }
+.fund-item .fund-return .label { font-size: 11px; color: var(--ios-text-secondary); }
+.fund-item .actions { display: flex; gap: 6px; margin-left: 10px; }
+.fund-item .btn-star {
+  width: 30px; height: 30px;
+  border-radius: 50%;
+  border: 1.5px solid var(--ios-gray4);
+  background: white;
+  cursor: pointer;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+}
+.fund-item .btn-star.starred {
+  border-color: var(--ios-yellow);
+  background: #FFF9E6;
+}
+
+/* ── Filter Pills ── */
+.filter-pills {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding-bottom: 8px;
+  margin-bottom: 10px;
+  scrollbar-width: none;
+}
+.filter-pills::-webkit-scrollbar { display: none; }
+.filter-pill {
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 500;
+  white-space: nowrap;
+  border: 1px solid var(--ios-gray4);
+  background: var(--ios-card);
+  cursor: pointer;
+  transition: all 0.2s;
+  user-select: none;
+}
+.filter-pill.active {
+  background: var(--ios-blue);
+  color: white;
+  border-color: var(--ios-blue);
+}
+.filter-pill:hover:not(.active) { background: var(--ios-gray6); }
+
+/* ── Phase Badge ── */
+.phase-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 5px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  color: white;
+}
+.phase-badge.accumulation { background: var(--ios-green); }
+.phase-badge.markup { background: var(--ios-red); }
+.phase-badge.distribution { background: var(--ios-orange); }
+.phase-badge.shakeout { background: var(--ios-gray); }
+
+/* ── Holdings Grid ── */
+.holdings-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 12px;
+}
+.holding-card {
+  background: var(--ios-card);
+  border-radius: var(--ios-radius-sm);
+  padding: 16px;
+  border: 0.5px solid var(--ios-separator);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.holding-card:hover { box-shadow: var(--ios-shadow); }
+.holding-card .holding-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 10px;
+}
+.holding-card .stock-name { font-size: 16px; font-weight: 600; }
+.holding-card .stock-code { font-size: 11px; color: var(--ios-text-secondary); }
+.holding-card .weight { font-size: 12px; color: var(--ios-blue); font-weight: 500; }
+.holding-card .price-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+.holding-card .price { font-size: 20px; font-weight: 600; }
+.holding-card .change {
+  font-size: 14px;
+  font-weight: 600;
+  padding: 3px 8px;
+  border-radius: 6px;
+}
+.change.up { color: var(--ios-red); background: #FFEBEB; }
+.change.down { color: var(--ios-green); background: #E8F8ED; }
+.change.flat { color: var(--ios-gray); background: var(--ios-gray6); }
+.holding-card .state-tag {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 500;
+  margin-right: 4px;
+  margin-bottom: 4px;
+}
+.state-tag.warning { background: #FFF3E0; color: #E65100; }
+.state-tag.danger { background: #FFEBEE; color: #C62828; }
+.state-tag.info { background: #E3F2FD; color: #1565C0; }
+.state-tag.success { background: #E8F5E9; color: #2E7D32; }
+.state-tag.default { background: var(--ios-gray6); color: var(--ios-gray); }
+
+.holding-card .indicator-list { font-size: 12px; color: var(--ios-text-secondary); }
+.holding-card .indicator-list li { margin: 3px 0; list-style: none; padding-left: 0; }
+
+/* ── Chart Container ── */
+.chart-container {
+  width: 100%;
+  height: 400px;
+  margin-top: 10px;
+  background: var(--ios-card);
+  border-radius: var(--ios-radius-sm);
+  overflow: hidden;
+}
+
+/* ── News Section ── */
+.news-filters {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding-bottom: 8px;
+  scrollbar-width: none;
+}
+.news-filters::-webkit-scrollbar { display: none; }
+
+.news-item {
+  padding: 14px 0;
+  border-bottom: 0.5px solid var(--ios-separator);
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.news-item:hover { background: var(--ios-gray6); margin: 0 -18px; padding: 14px 18px; }
+.news-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 6px;
+}
+.news-title {
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 1.4;
+  flex: 1;
+  margin-right: 12px;
+}
+.news-stars { white-space: nowrap; font-size: 12px; }
+.news-stars .star { color: var(--ios-yellow); }
+.news-stars .star.empty { color: var(--ios-gray4); }
+.news-meta {
+  display: flex;
+  gap: 8px;
+  font-size: 12px;
+  color: var(--ios-text-secondary);
+  flex-wrap: wrap;
+  align-items: center;
+}
+.news-source { color: var(--ios-blue); font-weight: 500; }
+.news-category {
+  padding: 2px 8px;
+  border-radius: 10px;
+  font-size: 11px;
+  font-weight: 500;
+}
+.category-美联储 { background: #E3F2FD; color: #1565C0; }
+.category-国内政策 { background: #FFF3E0; color: #E65100; }
+.category-海外机构 { background: #F3E5F5; color: #7B1FA2; }
+.category-产业政策 { background: #E8F5E9; color: #2E7D32; }
+.category-市场动态 { background: #FCE4EC; color: #C62828; }
+.category-综合资讯 { background: var(--ios-gray6); color: var(--ios-gray); }
+.news-sectors {
+  display: flex;
+  gap: 4px;
+  flex-wrap: wrap;
+  margin-top: 6px;
+}
+.source-type-tag {
+  padding: 2px 8px;
+  border-radius: 10px;
+  font-size: 11px;
+  font-weight: 600;
+}
+.source-type-tag.type-official { background: #FFF3E0; color: #E65100; }
+.source-type-tag.type-domestic { background: #E3F2FD; color: #1565C0; }
+.source-type-tag.type-international { background: #F3E5F5; color: #7B1FA2; }
+.source-type-tag.type-fund { background: #E8F5E9; color: #2E7D32; }
+.source-type-tag.type-flash { background: #FFEBEE; color: #C62828; }
+
+.news-sector-tag {
+  padding: 2px 8px;
+  border-radius: 10px;
+  font-size: 11px;
+  background: #E8F0FE;
+  color: var(--ios-blue);
+  font-weight: 500;
+}
+
+/* ── News Tags (multi-tag per item) ── */
+.news-bottom-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 6px;
+  gap: 8px;
+}
+.news-time {
+  font-size: 11px;
+  color: var(--ios-gray2);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.news-tags {
+  display: flex;
+  gap: 4px;
+  flex-wrap: wrap;
+}
+.news-tag {
+  padding: 2px 8px;
+  border-radius: 10px;
+  font-size: 11px;
+  font-weight: 500;
+  background: var(--ios-gray6);
+  color: var(--ios-text-secondary);
+}
+.news-tag-官方政策 { background: #FFF3E0; color: #E65100; }
+.news-tag-国内财经 { background: #E3F2FD; color: #1565C0; }
+.news-tag-国际财经 { background: #F3E5F5; color: #7B1FA2; }
+.news-tag-美联储 { background: #FFEBEE; color: #C62828; }
+.news-tag-海外机构 { background: #F3E5F5; color: #7B1FA2; }
+.news-tag-产业政策 { background: #E8F5E9; color: #2E7D32; }
+.news-tag-市场动态 { background: #FCE4EC; color: #C62828; }
+.news-tag-科技 { background: #E0F2F1; color: #00695C; }
+.news-tag-能源 { background: #FFF8E1; color: #E65100; }
+.news-tag-大宗商品 { background: #EFEBE9; color: #4E342E; }
+.news-tag-国际贸易 { background: #E0F7FA; color: #006064; }
+.news-tag-综合资讯 { background: var(--ios-gray6); color: var(--ios-gray); }
+
+/* ── Region Tag ── */
+.region-tag {
+  padding: 1px 6px;
+  border-radius: 8px;
+  font-size: 10px;
+  font-weight: 600;
+}
+.region-tag.region-domestic { background: #E3F2FD; color: #1565C0; }
+.region-tag.region-international { background: #F3E5F5; color: #7B1FA2; }
+
+/* ── Refresh Button ── */
+.refresh-btn {
+  padding: 8px 16px;
+  background: var(--ios-blue);
+  color: white;
+  border: none;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 600;
+  font-family: var(--font-system);
+  cursor: pointer;
+  transition: opacity 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.refresh-btn:hover { opacity: 0.85; }
+.refresh-btn:active { opacity: 0.7; }
+.refresh-btn.refreshing { opacity: 0.6; pointer-events: none; }
+
+/* ── Pagination ── */
+.pagination {
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+  margin-top: 14px;
+}
+.pagination button {
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  border: 1px solid var(--ios-gray4);
+  background: white;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.pagination button.active {
+  background: var(--ios-blue);
+  color: white;
+  border-color: var(--ios-blue);
+}
+.pagination button:hover:not(.active) { background: var(--ios-gray6); }
+.pagination button:disabled { opacity: 0.3; cursor: default; }
+
+/* ── Loading ── */
+.loading {
+  text-align: center;
+  padding: 40px;
+  color: var(--ios-text-secondary);
+}
+.loading .spinner {
+  display: inline-block;
+  width: 24px; height: 24px;
+  border: 2.5px solid var(--ios-gray5);
+  border-top-color: var(--ios-blue);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+  margin-bottom: 10px;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ── Empty State ── */
+.empty-state {
+  text-align: center;
+  padding: 40px;
+  color: var(--ios-text-secondary);
+  font-size: 15px;
+}
+.empty-state .icon { font-size: 40px; margin-bottom: 10px; }
+
+/* ── Scrollbar ── */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--ios-gray4); border-radius: 4px; }
+
+/* ── Responsive ── */
+@media (max-width: 640px) {
+  .holdings-grid { grid-template-columns: 1fr; }
+  .main-content { padding: 10px; }
+  .card { padding: 14px; }
+}
+
+/* ── Fund Detail Back Button ── */
+.back-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 8px 14px;
+  background: none;
+  border: none;
+  color: var(--ios-blue);
+  font-size: 15px;
+  font-family: var(--font-system);
+  font-weight: 500;
+  cursor: pointer;
+  margin-bottom: 10px;
+}
+.back-btn:hover { opacity: 0.7; }
+
+/* ── Phase Detail Card ── */
+.phase-detail { margin: 12px 0; }
+.phase-detail .reasons { font-size: 13px; color: var(--ios-text-secondary); }
+.phase-detail .reasons li { margin: 4px 0; list-style: disc; margin-left: 18px; }
+
+/* ── Watchlist Section ── */
+.watchlist-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.watchlist-actions { display: flex; gap: 8px; align-items: center; }
+
+/* ── Sector Cards ── */
+.sector-card {
+  background: var(--ios-card);
+  border-radius: var(--ios-radius-sm);
+  padding: 16px;
+  border: 0.5px solid var(--ios-separator);
+  cursor: default;
+  transition: all 0.2s;
+}
+.sector-card:hover { box-shadow: var(--ios-shadow); }
+.sector-card.fund-sector-card { cursor: pointer; }
+.sector-card.fund-sector-card:hover { border-color: var(--ios-blue); }
+.sector-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 8px;
+}
+.sector-name { font-size: 15px; font-weight: 600; }
+.sector-meta { font-size: 11px; color: var(--ios-text-secondary); margin-top: 2px; }
+.sector-change { text-align: right; }
+.sector-change-val { font-size: 17px; font-weight: 700; }
+.sector-change.up .sector-change-val { color: var(--ios-red); }
+.sector-change.down .sector-change-val { color: var(--ios-green); }
+.sector-change.flat .sector-change-val { color: var(--ios-gray); }
+.sector-lead {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding-top: 8px;
+  border-top: 0.5px solid var(--ios-separator);
+  font-size: 12px;
+}
+.sector-lead-label { color: var(--ios-text-secondary); }
+.sector-lead-name { font-weight: 500; color: var(--ios-text); }
+.sector-lead-change { font-weight: 600; }
+.sector-lead-change.up { color: var(--ios-red); }
+.sector-lead-change.down { color: var(--ios-green); }
+.sector-no-data { opacity: 0.55; background: var(--ios-gray6); }
+
+/* Fund sector card */
+.sector-right {
+  text-align: right;
+  display: flex;
+  align-items: center;
+  min-width: 70px;
+  justify-content: flex-end;
+}
+.sector-group-tag {
+  display: inline-block;
+  padding: 1px 8px;
+  border-radius: 10px;
+  font-size: 11px;
+  font-weight: 500;
+}
+.sector-group-tag.group-tech { background: #E3F2FD; color: #1565C0; }
+.sector-group-tag.group-trad { background: #E8F5E9; color: #2E7D32; }
+
+.collapse-btn {
+  display: inline-block;
+  padding: 10px 28px;
+  background: none;
+  border: 1px solid var(--ios-gray4);
+  border-radius: 20px;
+  font-size: 14px;
+  font-weight: 500;
+  font-family: var(--font-system);
+  color: var(--ios-blue);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.collapse-btn:hover {
+  background: var(--ios-gray6);
+  border-color: var(--ios-blue);
+}
+
+/* ── NAV Drawdown Badge ── */
+.drawdown-badge {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 600;
+}
+.drawdown-badge.severe { background: #FFEBEE; color: #C62828; }
+.drawdown-badge.moderate { background: #FFF3E0; color: #E65100; }
+.drawdown-badge.mild { background: #E8F5E9; color: #2E7D32; }
+
+/* ── AI Analysis Panel ── */
+.ai-h2 {
+  font-size: 18px;
+  font-weight: 700;
+  margin: 20px 0 10px;
+  color: var(--ios-text);
+  padding-bottom: 8px;
+  border-bottom: 1.5px solid var(--ios-blue);
+}
+.ai-h3 {
+  font-size: 15px;
+  font-weight: 600;
+  margin: 16px 0 8px;
+  color: var(--ios-text);
+}
+.ai-h4 {
+  font-size: 14px;
+  font-weight: 600;
+  margin: 12px 0 6px;
+  color: var(--ios-text-secondary);
+}
+.ai-p {
+  font-size: 14px;
+  line-height: 1.7;
+  color: var(--ios-text-secondary);
+  margin: 6px 0;
+}
+.ai-ul {
+  margin: 8px 0;
+  padding-left: 20px;
+}
+.ai-li {
+  font-size: 14px;
+  line-height: 1.7;
+  color: var(--ios-text-secondary);
+  margin: 3px 0;
+}
+.ai-li strong {
+  color: var(--ios-text);
+}
+.ai-hr {
+  border: none;
+  border-top: 0.5px solid var(--ios-separator);
+  margin: 16px 0;
+}
+.ai-meta {
+  margin-top: 20px;
+  padding-top: 12px;
+  border-top: 0.5px solid var(--ios-separator);
+  font-size: 11px;
+  color: var(--ios-gray);
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+#aiAnalysisContent {
+  line-height: 1.7;
+}
+#aiAnalysisContent strong {
+  color: var(--ios-text);
+}
+#aiAnalysisContent .loading {
+  padding: 40px;
+}
