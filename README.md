@@ -1,4 +1,4 @@
-### AkihiGod
+### Hi, I'm AkihiGod
 
 运维方向，关注发布链路与可观测性。项目均在一台 16G 的 Windows 笔记本上用 Docker 运行，未使用云服务。
 
@@ -23,6 +23,6 @@
 
 #### 测试开发
 
+- [接口自动化测试](https://gitee.com/akihiGod/akihi-god/tree/api-testing-demo)：pytest + requests，含请求封装、数据驱动、参数化用例、异常与边界场景、HTML 报告
 - [RAG 测试问答与用例生成](https://gitee.com/akihiGod/akihi-god/tree/testpilot)（毕业论文方向）
-- [约束 agent 写代码的质量规范仓：三层测试 / 覆盖率门禁 / 变异测试 / CI](https://gitee.com/akihiGod/akihi-god/tree/qa-agent-demo)
 - [规则与 LLM 变异对比及补测闭环](https://gitee.com/akihiGod/akihi-god/tree/mutation-research)
